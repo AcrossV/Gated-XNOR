@@ -240,7 +240,7 @@ def train(  network,
     best_val_err = 100
     best_test_err = 100
 	
-	#initialize the best parameters
+    #initialize the best parameters
     best_epoch = 1
     best_params = lasagne.layers.get_all_params(network, discrete=True)
     update_type = 200 #intialize the update_type to be normal training
@@ -326,7 +326,7 @@ all the attributes in one layer class cannot be set more than once.
 
 if __name__ == "__main__":
     
-	# BN parameters
+    # BN parameters
     alpha = 0.1 
     print("alpha = "+str(alpha))
     epsilon = 1e-4 
