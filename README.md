@@ -1,2 +1,2 @@
-# Gated-XNOR
+# GatedXNOR
 Ternary Weights and Activations
