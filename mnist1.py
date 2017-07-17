@@ -236,7 +236,7 @@ def train(  network,
     
     # shuffle the training set
     X_train,y_train = shuffle(X_train,y_train)
-	# initialize the err to be 100%
+    # initialize the err to be 100%
     best_val_err = 100
     best_test_err = 100
 	
@@ -250,8 +250,8 @@ def train(  network,
     
     for epoch in range(num_epochs): 
         
-		# if a new round of training did not search a better result for a long time, the network will transfer to a random state and continue to search
-		# otherwise, the network will be normally trained
+	# if a new round of training did not search a better result for a long time, the network will transfer to a random state and continue to search
+	# otherwise, the network will be normally trained
         if  epoch >= best_epoch + 15:
 	        update_type = 10       
         else:
