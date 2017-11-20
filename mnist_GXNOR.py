@@ -25,8 +25,6 @@ import lasagne
 import cPickle as pickle
 import gzip
 
-import batch_norm
-
 from pylearn2.datasets.mnist import MNIST
 from pylearn2.utils import serial
 
@@ -144,11 +142,11 @@ def discrete_grads(loss,network,LR):
         
         delta_W1 =c*(state_rand-parambest) #parambest would transfer to state_rand with probability of a, or keep unmoved with probability of 1-a
         delta_W1_direction = T.cast(T.sgn(delta_W1),theano.config.floatX)
-	    dis1=T.abs_(delta_W1) #the absolute distance
+	dis1=T.abs_(delta_W1) #the absolute distance
         k1=delta_W1_direction*T.floor(dis1/L) #the integer part
         v1=delta_W1-k1*L #the decimal part
         Prob1= T.abs_(v1/L) #the transfer probability
-	    Prob1 = T.tanh(th*Prob1) #the nonlinear tanh() function accelerates the state transfer
+	Prob1 = T.tanh(th*Prob1) #the nonlinear tanh() function accelerates the state transfer
 		   
         delta_W2 = updates[param] - param 
         delta_W2_direction = T.cast(T.sgn(delta_W2),theano.config.floatX)	   
@@ -170,7 +168,7 @@ def discrete_grads(loss,network,LR):
         updates_param2 = T.clip(param + delta_W2_new,-H,H)
         updates_param2 = weight_tune(updates_param2,-H,H) #fine tuning for guaranteeing each element strictly constrained in the discrete space
 
-		# if update_type<100, the weight probabilistically tranfers from parambest to state_rand, which helps to search the global minimum
+	# if update_type<100, the weight probabilistically tranfers from parambest to state_rand, which helps to search the global minimum
         # elst it would probabilistically transfer from param to a state nearest to updates[param]		
         updates[param]= T.switch(T.lt(update_type,100), updates_param1, updates_param2)    
     
@@ -331,7 +329,7 @@ if __name__ == "__main__":
     print("batch_size = "+str(batch_size))
        
     # Training parameters
-    num_epochs = 5000 
+    num_epochs = 4000 
     print("num_epochs = "+str(num_epochs))
     
 
@@ -352,9 +350,9 @@ if __name__ == "__main__":
 
     
     # Decaying LR 
-    LR_start = 0.01 
+    LR_start = 0.1 
     print("LR_start = "+str(LR_start))
-    LR_fin = 0.00001 
+    LR_fin = 0.0000001 
     print("LR_fin = "+str(LR_fin))
     LR_decay = (LR_fin/LR_start)**(1./(num_epochs)) 
     print("LR_decay = "+str(LR_decay))
@@ -398,7 +396,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
             N=N,
             num_filters=32, 
@@ -408,7 +405,7 @@ if __name__ == "__main__":
 
     cnn = lasagne.layers.MaxPool2DLayer(cnn, pool_size=(2, 2))
 	
-    cnn = batch_norm.BatchNormLayer(
+    cnn = lasagne.layers.BatchNormLayer(
                 cnn,
                 epsilon=epsilon, 
                 alpha=alpha)
@@ -420,7 +417,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
             N=N,
             num_filters=64, 
@@ -430,7 +426,7 @@ if __name__ == "__main__":
 
     cnn = lasagne.layers.MaxPool2DLayer(cnn, pool_size=(2, 2))
 	
-    cnn = batch_norm.BatchNormLayer(
+    cnn = lasagne.layers.BatchNormLayer(
                 cnn,
                 epsilon=epsilon, 
                 alpha=alpha)
@@ -442,13 +438,12 @@ if __name__ == "__main__":
     cnn = DenseLayer(
                 cnn, 
                 discrete=discrete,
-                stochastic=stochastic,
                 H=H,
                 N=N,
                 num_units=512,
                 nonlinearity=lasagne.nonlinearities.identity) 
     
-    cnn = batch_norm.BatchNormLayer(
+    cnn = lasagne.layers.BatchNormLayer(
                 cnn,
                 epsilon=epsilon, 
                 alpha=alpha)
@@ -459,16 +454,14 @@ if __name__ == "__main__":
     cnn = DenseLayer(
                 cnn, 
                 discrete=discrete,
-                stochastic=stochastic,
                 H=H,
                 N=N,
                 num_units=10,
                 nonlinearity=lasagne.nonlinearities.identity) 
-    cnn = batch_norm.BatchNormLayer(
+    cnn = lasagne.layers.BatchNormLayer(
                 cnn,
                 epsilon=epsilon, 
-                alpha=alpha,
-                nonlinearity=lasagne.nonlinearities.identity)
+                alpha=alpha)
 
     train_output = lasagne.layers.get_output(cnn, deterministic=False)
     best_params = lasagne.layers.get_all_params(cnn, discrete=True)

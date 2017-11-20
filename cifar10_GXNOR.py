@@ -26,7 +26,6 @@ import lasagne
 import cPickle as pickle
 import gzip
 
-import batch_norm
 
 from pylearn2.datasets.cifar10 import CIFAR10 
 from pylearn2.utils import serial
@@ -145,15 +144,15 @@ def discrete_grads(loss,network,LR):
         
         delta_W1 =c*(state_rand-parambest)#parambest would transfer to state_rand with probability of a, or keep unmoved with probability of 1-a
         delta_W1_direction = T.cast(T.sgn(delta_W1),theano.config.floatX)
-		dis1=T.abs_(delta_W1) #the absolute distance
+	dis1=T.abs_(delta_W1) #the absolute distance
         k1=delta_W1_direction*T.floor(dis1/L) #the integer part
         v1=delta_W1-k1*L #the decimal part
         Prob1= T.abs_(v1/L) #the transfer probability
-	    Prob1 = T.tanh(th*Prob1) #the nonlinear tanh() function accelerates the state transfer
+	Prob1 = T.tanh(th*Prob1) #the nonlinear tanh() function accelerates the state transfer
 		   
         delta_W2 = updates[param] - param
         delta_W2_direction = T.cast(T.sgn(delta_W2),theano.config.floatX)
-		dis2=T.abs_(delta_W2) #the absolute distance
+	dis2=T.abs_(delta_W2) #the absolute distance
         k2=delta_W2_direction*T.floor(dis2/L) #the integer part
         v2=delta_W2-k2*L #the decimal part
         Prob2= T.abs_(v2/L) #the transfer probability
@@ -207,7 +206,7 @@ def train(  network,
     def train_epoch(X,y,LR):    
         loss = 0
         batches = len(X)/batch_size
-	    n_samples = X.shape[0]
+	n_samples = X.shape[0]
         indx = np.random.permutation(xrange(n_samples))
 	    #this work
         for i in range(batches):
@@ -255,7 +254,7 @@ def train(  network,
         loss = 0
         batches = len(X)/batch_size
         
-		n_samples_valid = X.shape[0]
+	n_samples_valid = X.shape[0]
 		
         for i in range(batches):
 	    sl = slice(i * batch_size, (i + 1) * batch_size)
@@ -278,7 +277,7 @@ def train(  network,
     
     #initialize the best parameters
     best_epoch = 1
-	best_params = lasagne.layers.get_all_params(network, discrete=True)
+    best_params = lasagne.layers.get_all_params(network, discrete=True)
     best_update = 200 #intialize the update_type to be normal training
     
     verr = []
@@ -339,7 +338,7 @@ def train(  network,
         
      
     path = 'H'+str(H)+'N'+str(N)+'LR'+str(LR_start)+'D'+str(LR_decay)+'B'+str(batch_size)+'E'+str(num_epochs)+'tanh'+str(th)+'.mat'
-    scio.savemat(path,{'valid_err':vr,'train_loss':tloss})
+    #scio.savemat(path,{'valid_err':vr,'train_loss':tloss})
     
     fig = plt.figure(1) 
     x = np.arange(num_epochs-1) + 1
@@ -358,16 +357,16 @@ def train(  network,
 if __name__ == "__main__":
     
     # BN parameters
-	alpha = .1 #0.1
+    alpha = .1 #0.1
     print("alpha = "+str(alpha))
     epsilon = 1e-4
     print("epsilon = "+str(epsilon))
 	
-    batch_size = 1000 #1000
+    batch_size = 1024 #1000
     print("batch_size = "+str(batch_size))    
     
     # Training parameters
-    num_epochs = 2000 
+    num_epochs = 2000
     print("num_epochs = "+str(num_epochs))
     
 
@@ -394,7 +393,7 @@ if __name__ == "__main__":
     LR_decay = (LR_fin/LR_start)**(1./num_epochs)
     print("LR_decay = "+str(LR_decay))
 
-	print('Loading CIFAR10 dataset...')
+    print('Loading CIFAR10 dataset...')
 	
     train_set_size = 45000 
     train_set = CIFAR10(which_set="train",start=0,stop = train_set_size)
@@ -447,9 +446,8 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=False,
-            stochastic=stochastic,
             H=H,
-	        N=N,
+	    N=N,
             num_filters=128, 
             filter_size=(3, 3),
             pad=1,
@@ -467,7 +465,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
 	        N=N,
             num_filters=128, 
@@ -490,7 +487,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
 	        N=N,
             num_filters=256, 
@@ -510,7 +506,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
 	        N=N,
             num_filters=256, 
@@ -532,7 +527,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
 	        N=N,
             num_filters=512, 
@@ -552,7 +546,6 @@ if __name__ == "__main__":
     cnn = Conv2DLayer(
             cnn, 
             discrete=discrete,
-            stochastic=stochastic,
             H=H,
 	        N=N,
             num_filters=512, 
@@ -574,7 +567,6 @@ if __name__ == "__main__":
     cnn = DenseLayer(
                 cnn, 
                 discrete=discrete,
-                stochastic=stochastic,
                 H=H,
 		        N=N,
                 nonlinearity=lasagne.nonlinearities.identity,
@@ -592,7 +584,6 @@ if __name__ == "__main__":
     cnn = DenseLayer(
                 cnn, 
                 discrete=discrete,
-                stochastic=stochastic,
                 H=H,
 		        N=N,
                 nonlinearity=lasagne.nonlinearities.identity,  #identity
