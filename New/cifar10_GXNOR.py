@@ -26,8 +26,6 @@ import lasagne
 import cPickle as pickle
 import gzip
 
-import batch_norm
-
 from pylearn2.datasets.cifar10 import CIFAR10 
 from pylearn2.utils import serial
 
