@@ -363,11 +363,11 @@ if __name__ == "__main__":
     epsilon = 1e-4
     print("epsilon = "+str(epsilon))
 	
-    batch_size = 100 #1000
+    batch_size = 1000 
     print("batch_size = "+str(batch_size))    
     
     # Training parameters
-    num_epochs = 100 
+    num_epochs = 2000 
     print("num_epochs = "+str(num_epochs))
     
 
