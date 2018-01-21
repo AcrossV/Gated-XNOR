@@ -208,7 +208,7 @@ def train(  network,
 	n_samples = X.shape[0]
         indx = np.random.permutation(xrange(n_samples))
 	    #this work
-        for i in range(batches):
+        for i in range((n_samples + batch_size - 1) // batch_size):
             sl = slice(i * batch_size, (i + 1) * batch_size)
             X_batch = X[indx[sl]]
             y_batch = y[indx[sl]]
@@ -268,7 +268,7 @@ def train(  network,
 
         return err, loss      
 
-    # shuffle the train set
+    # shuffle the train set（or not）
     X_train,y_train = shuffle(X_train,y_train)
 	# initialize the err to be 100%
     best_val_err = 100
