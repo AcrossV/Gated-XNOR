@@ -25,6 +25,6 @@ A fast Nvidia GPU
 
 
 
-Others : We focus on best test error rate not test error rate on datasets.Besides，the lr_policy on CIFAR and SVHN adapt multistep lr_policy  in practical work like in caffe training.
+Others : We focus on best test error rate not test error rate on datasets.Besides,the lr_policy on CIFAR and SVHN adapt multistep lr_policy  in practical work like in caffe training.
 
 Please cite our paper if you use this code: https://arxiv.org/pdf/1705.09283.pdf
