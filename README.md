@@ -19,7 +19,8 @@ Lasagne 0.2.dev1
 The datasets you need  
 A fast Nvidia GPU
 
-Others : We focus on best test error rate not test error rate on datasets.Besides,the lr_policy on CIFAR adopts multistep lr_policy  in practical work like in caffe training.
+Others : We focus on best test error rate not test error rate on datasets.    
+Besides,the lr_policy on CIFAR adopts multistep lr_policy  in practical work like in caffe training.
 
 Please cite our paper if you use this code: https://www.sciencedirect.com/science/article/pii/S0893608018300108
 
