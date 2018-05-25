@@ -9,15 +9,25 @@ Abstrct: Although deep neural networks (DNNs) are being a revolutionary power to
 Recommendation：
 
 Python 2.7
+
 Numpy 1.7.1
+
 Scipy 0.11
+
 cuda7.5
+
 cuDNN v4
+
 Theano 0.8 (Setting your Theano flags to use the GPU) 
+
 （Warnings occurs if using Theano 0.9.）
+
 Pylearn2
+
 Lasagne 0.2.dev1
+
 The datasets you need
+
 A fast Nvidia GPU
 
 
