@@ -2,7 +2,7 @@
 # We mainly modify the gradient calculation (e.g. discrete_grads function) and neuronal activition (e.g. discrete_neuron_3states) for network training. 
 # And we save the best parameters for searching a better result.
 # For multilevel extension, you can simply modify the activation function and the N parameter for weight.
-# Please make sure that a good accuracy can be achieved without Gated-XNOR policy(using discrete = False) 
+# Please make sure that a good accuracy （about 7%）can be achieved without Gated-XNOR policy(using discrete = False,change to a small batch_size) 
 # Please cite our paper if you use this code: https://arxiv.org/pdf/1705.09283.pdf
 
 from __future__ import print_function
