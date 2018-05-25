@@ -20,8 +20,8 @@ The datasets you need
 A fast Nvidia GPU
 
 Others : We focus on best test error rate not test error rate on datasets.    
-Besides,the lr_policy on CIFAR adopts multistep lr_policy in practical work like in caffe training.
-If using without GXNOR-policy,please adopt discrete=False and change to be a small batch_size.
+Besides, the lr configuration on CIFAR10 adopts the widely used lr decay at specific steps.    
+If you want to disable GXNOR-Net, please set discrete=False and use smaller batch_size as that in usual full-precision networks.
 
 Please cite our paper if you use this code: https://www.sciencedirect.com/science/article/pii/S0893608018300108
 
