@@ -21,7 +21,7 @@ A fast Nvidia GPU
 
 Others : We focus on best test error rate not test error rate on datasets.    
 Besides, the lr configuration on CIFAR10 adopts the widely used lr decay at specific steps.    
-If you want to disable GXNOR-Net, please set discrete=False and use smaller batch_size as that in usual full-precision networks.
+If you want to disable GXNOR-Net, please set discrete=False and use a smaller batch_size as that in usual full-precision networks.
 
 Please cite our paper if you use this code: https://www.sciencedirect.com/science/article/pii/S0893608018300108
 
