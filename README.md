@@ -9,7 +9,7 @@ Abstrct: Although deep neural networks (DNNs) are being a revolutionary power to
 Recommendation：  
 Python 2.7  
 Numpy 1.11.1  
-Scipy 0.18.1 
+Scipy 0.18.1    
 cuda7.5  
 cuDNN v4  
 Theano 0.8 (Setting your Theano flags to use the GPU)   
