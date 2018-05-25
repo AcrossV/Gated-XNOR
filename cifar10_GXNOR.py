@@ -2,6 +2,7 @@
 # We mainly modify the gradient calculation (e.g. discrete_grads function) and neuronal activition (e.g. discrete_neuron_3states) for network training. 
 # And we save the best parameters for searching a better result.
 # For multilevel extension, you can simply modify the activation function and the N parameter for weight.
+# Please make sure that a good accuracy can be achieved without Gated-XNOR policy(using discrete = False) 
 # Please cite our paper if you use this code: https://arxiv.org/pdf/1705.09283.pdf
 
 from __future__ import print_function
@@ -294,8 +295,11 @@ def train(  network,
         if epoch==0: # epoch 0 is for weight initialization to a discrete space Z_N without update
             LR = 0
         elif epoch<=1:
-            LR = LR_start
-			
+            LR = LR_start 
+	elif epoch==1000:# the lr_policy on CIFAR adopts multistep lr_policy in practical work like in caffe training.Not adopting this policy, accuracy can not reach above 90%.
+            LR = LR*LR_decay*0.1
+	elif epoch==1600:
+            LR = LR*LR_decay*0.1
         else:
             LR = LR*LR_decay #decay the LR  
 
