@@ -17,7 +17,7 @@ Theano 0.8 (Setting your Theano flags to use the GPU)
 Pylearn2  
 Lasagne 0.2.dev1  
 The datasets you need  
-A fast Nvidia GPU
+A fast Nvidia GPU(We used tesla k80)
 
 Others : We focus on best test error rate not test error rate on datasets.    
 Besides, the lr configuration on CIFAR10 adopts the widely used lr decay at specific steps.    
